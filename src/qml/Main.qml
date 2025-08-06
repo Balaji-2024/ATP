@@ -177,6 +177,8 @@ Window {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
+                    listView.currentIndex = index;
+                    listView.positionViewAtIndex(index, ListView.Center);
                     centerListView.currentIndex = index;
                 }
             }
