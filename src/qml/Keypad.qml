@@ -7,13 +7,13 @@ Item {
     anchors.fill: parent
     ColumnLayout {
         anchors.fill: parent
-        spacing: 10
+        spacing: 5
         RowLayout {
             id: row
             Layout.preferredHeight: root.height * 0.2 // 👈 Dynamic height
             Layout.fillWidth: true
             Layout.margins: 5
-            spacing: 10
+            spacing: 5
             Rectangle {
                 id: ipText
                 Layout.fillWidth: true
@@ -25,7 +25,7 @@ Item {
                     anchors.centerIn: parent
                     text: ""
                     color: "black"
-                    font.pixelSize: Math.min(ipText.width) * 0.12 // auto-scaling
+                    font.pixelSize: Math.min(ipText.width) * 0.10 // auto-scaling
                 }
             }
             ComboBox {
@@ -41,7 +41,7 @@ Item {
                 contentItem: Text {
                     text: intervalCombo.currentText
                     anchors.centerIn: parent
-                    font.pixelSize: Math.min(parent.width, row.height) * 0.5
+                    font.pixelSize: Math.min(parent.width, row.height) * 0.4
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     color: "black"
@@ -57,7 +57,7 @@ Item {
                 Text {
                     anchors.centerIn: parent
                     text: "Ping"
-                    font.pixelSize: Math.min(parent.width, parent.height) * 0.5
+                    font.pixelSize: Math.min(parent.width, parent.height) * 0.4
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     color: "black"
@@ -99,10 +99,10 @@ Item {
                                 ipTextDisplay.text = ipTextDisplay.text.slice(0, -1);
                             else if (ipTextDisplay.text.length < 15)
                                 ipTextDisplay.text += modelData;
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
