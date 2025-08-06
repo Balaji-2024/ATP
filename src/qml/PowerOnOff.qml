@@ -4,19 +4,19 @@ import CustomTheme 1.0
 
 Item {
     id: root
-
+    width: 100
+    height: 100
     Shape {
         anchors.fill: parent
-
         ShapePath {
-            strokeWidth: 4
+            strokeWidth: 2
             strokeColor: Theme.text
             fillColor: "transparent"
             scale: Qt.size(width / 24, height / 24)
             PathSvg {
+
                 path: "M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9"
             }
         }
     }
 }
-

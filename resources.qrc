@@ -4,6 +4,15 @@
         <file>src/qml/Light.qml</file>
         <file>src/qml/Dark.qml</file>
         <file>src/qml/PowerOnOff.qml</file>
+        <file>src/qml/Cpu-chip.qml</file>
+        <file>src/qml/DiskSvg.qml</file>
+        <file>src/qml/Ethernet.qml</file>
+        <file>src/qml/Memory.qml</file>
+        <file>src/qml/MenuSvg.qml</file>
+        <file>src/qml/Serial.qml</file>
+        <file>src/qml/Usb.qml</file>
+        <file>src/qml/Video.qml</file>
+        <file>src/qml/Keypad.qml</file>
     </qresource>
     <qresource prefix="/svg">
         <file>assets/svg/powerOnOff.svg</file>

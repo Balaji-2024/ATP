@@ -6,20 +6,17 @@ import CustomTheme 1.0
 Item {
     id: root
     // Pass theme from outside (default: "light")
-    property string ctheme: "light"
-        property color stroke: Theme.text
-
-            Shape {
-                anchors.fill: parent
-
-                ShapePath {
-                    strokeWidth: 4
-                    strokeColor: stroke
-                    fillColor: "transparent"
-                    // Scale for 24x24 viewBox
-                    scale: Qt.size(root.width / 24, root.height / 24)
-                    PathSvg {
-                        path: "
+    property color stroke: Theme.text
+    Shape {
+        anchors.fill: parent
+        ShapePath {
+            strokeWidth: 2
+            strokeColor: stroke
+            fillColor: "transparent"
+            // Scale for 24x24 viewBox
+            scale: Qt.size(root.width / 24, root.height / 24)
+            PathSvg {
+                path: "
                         M7 10.75 m -0.6, 0
                         a 0.6, 0.6 0 1, 0 1.2, 0
                         a 0.6, 0.6 0 1, 0 -1.2, 0
@@ -57,7 +54,7 @@ Item {
                         a 0.6, 0.6 0 1, 0 -1.2, 0
 
                         M4.90701 6.99933C3.13073 6.99933 1.82042 8.65816 2.23177 10.3862L3.30329 14.8875C3.5982 16.1263 4.70507 17.0007 5.97854 17.0007H18.0172C19.2901 17.0007 20.3966 16.1271 20.6921 14.889L21.7664 10.3877C22.1789 8.65932 20.8685 6.99933 19.0915 6.99933H4.90701Z"
-                    }
-                }
             }
         }
+    }
+}

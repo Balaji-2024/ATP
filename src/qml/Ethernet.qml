@@ -5,25 +5,18 @@ import CustomTheme 1.0
 
 Item {
     id: root
-    width: 100
-    height: 100
+    Shape {
+        anchors.fill: parent
 
-    // Pass theme from outside (default: "light")
-    property string ctheme: "light"
-        property color stroke: Theme.text
-
-            Shape {
-                anchors.fill: parent
-
-                ShapePath {
-                    strokeWidth: 4
-                    strokeColor: stroke
-                    fillColor: "transparent"
-                    // Scale for 24x24 viewBox
-                    scale: Qt.size(root.width / 24, root.height / 24)
-                    PathSvg {
-                        path: "M8 4 H16 V8 H8 Z M12 8 V12 M2 12 H22 M6 12 V16 M18 12 V16 M2 16 H10 V20 H2 Z M14 16 H22 V20 H14 Z"
-                    }
-                }
+        ShapePath {
+            strokeWidth: 2
+            strokeColor: Theme.text
+            fillColor: "transparent"
+            // Scale for 24x24 viewBox
+            scale: Qt.size(root.width / 24, root.height / 24)
+            PathSvg {
+                path: "M8 4 H16 V8 H8 Z M12 8 V12 M2 12 H22 M6 12 V16 M18 12 V16 M2 16 H10 V20 H2 Z M14 16 H22 V20 H14 Z"
             }
         }
+    }
+}
