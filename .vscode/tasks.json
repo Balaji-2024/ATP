@@ -1,0 +1,62 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build ATP",
+			"type": "shell",
+			"command": "make clean all",
+			"options": {
+				"cwd": "${workspaceFolder}/build"
+			},
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "Run ATP",
+			"type": "shell",
+			"command": "./ATP",
+			"options": {
+				"cwd": "${workspaceFolder}/build"
+			},
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"dependsOn": "Build ATP",
+			"problemMatcher": []
+		},
+		{
+			"label": "Run QML File",
+			"type": "shell",
+			"command": "qmlscene",
+			"args": [
+				"${file}"
+			],
+			"options": {
+				"env": {
+					"QML2_IMPORT_PATH": "${workspaceFolder}/src/qml/modules"
+				}
+			},
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Build + Run ATP",
+			"dependsOn": [
+				"Build ATP",
+				"Run ATP"
+			],
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}

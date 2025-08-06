@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>src/qml/Main.qml</file>
+        <file>src/qml/Light.qml</file>
+        <file>src/qml/Dark.qml</file>
+        <file>src/qml/PowerOnOff.qml</file>
+    </qresource>
+    <qresource prefix="/svg">
+        <file>assets/svg/powerOnOff.svg</file>
+    </qresource>
+</RCC>
