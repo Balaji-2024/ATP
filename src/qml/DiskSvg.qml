@@ -20,7 +20,7 @@ Item {
             fillColor: "transparent"
             scale: Qt.size(root.width / 64, root.height / 64)
             PathSvg {
-                path: "M10 4 H54 V60 H10 V4 M18 4 V10 M26 4 V10 M10 16 H53 M34 4 V15 M10 24 H15 M54 24 H48 M54 52 H48"
+                path: "M10 4 H54 V55 H10 V4 M18 4 V10 M26 4 V10 M10 16 H53 M34 4 V15 M10 24 H15 M54 24 H48 M54 52 H48"
             }
         }
         ShapePath {
@@ -42,5 +42,14 @@ Item {
                 path: "M33,34 A2,2,0,1,1,33,44 A2,2,0,1,1,33,34"
             }
         }
+    }
+    Text {
+        text: "Disk"
+        transform: Translate {
+            y: -10
+        }
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.bottom
+        color: Theme.text
     }
 }

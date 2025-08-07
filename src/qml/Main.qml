@@ -340,12 +340,12 @@ Window {
     ListView {
         id: listView
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20
+        anchors.bottomMargin: 30
         anchors.horizontalCenter: parent.horizontalCenter
         height: 50
-        width: parent.width / 4
+        width: parent.width / 3
         orientation: ListView.Horizontal
-        spacing: 5
+        spacing: 10
         snapMode: ListView.SnapToItem
         highlightMoveDuration: 1500
         highlightMoveVelocity: -1

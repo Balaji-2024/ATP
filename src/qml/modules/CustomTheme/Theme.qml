@@ -10,13 +10,13 @@ QtObject {
     // All theme definitions in one place
     readonly property var themes: {
         "light": {
-            text: "0e0f2d",
-            background: "white",
+            text: "#2C302E",
+            background: "#FFE2AD",
             accent: "blue"
         },
         "dark": {
-            text: "white",
-            background: "#121212",
+            text: "#FFE2AD",
+            background: "#1D201F",
             accent: "cyan"
         },
         "solarized": {

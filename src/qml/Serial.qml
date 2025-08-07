@@ -57,4 +57,13 @@ Item {
             }
         }
     }
+    Text {
+        text: "Serial"
+        transform: Translate {
+            y: -20
+        }
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.bottom
+        color: Theme.text
+    }
 }

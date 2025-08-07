@@ -17,4 +17,13 @@ Item {
             }
         }
     }
+    Text {
+        text: "Menu"
+        transform: Translate {
+            y: -10
+        }
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.bottom
+        color: Theme.text
+    }
 }
