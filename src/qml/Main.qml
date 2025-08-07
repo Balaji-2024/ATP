@@ -77,7 +77,7 @@ Window {
             }
 
             Repeater {
-                model: [centerMenuComponent, centerMemoryComponent, centerDiskComponent, centerSerialComponent, centerVideoComponent, centerEthernetComponent, centerUsbComponent, keypadComponent]
+                model: [centerMenuComponent, centerCpuChipComponent, centerMemoryComponent, centerDiskComponent, centerSerialComponent, centerCanComponent, centerVideoComponent, centerEthernetComponent, centerUsbComponent, keypadComponent]
                 Item {
                     width: centerListView.width
                     height: centerListView.height
@@ -91,6 +91,64 @@ Window {
         }
         Component {
             id: centerMenuComponent
+            Rectangle {
+                anchors.fill: parent
+                color: "transparent"
+                Image {
+                    id: cvrdeLogo
+                    source: "qrc:/png/assets/CVRDE_LOGO.png"
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    width: parent.width * 0.25
+                    height: parent.height * 0.25
+                    fillMode: Image.PreserveAspectFit
+                }
+                Image {
+                    id: parasLogo
+                    source: "qrc:/png/assets/paras_logo.png"
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    width: parent.width * 0.25
+                    height: parent.height * 0.25
+                    scale: 1.5
+                    fillMode: Image.PreserveAspectFit
+                }
+                GridLayout {
+                    id: grid
+                    width: parent.width * 0.6
+                    height: parent.height * 0.6
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    rowSpacing: 2.5
+                    columnSpacing: 3.5
+                    columns: 4  // Add this to fix layout into a 4-column grid
+
+                    Repeater {
+                        model: [menuComponent, cpuChipComponent, memoryComponent, diskComponent, serialComponent, canComponent, videoComponent, ethernetComponent, usbComponent]
+
+                        delegate: Item {
+                            Layout.preferredWidth: grid.width / 4 - grid.columnSpacing
+                            Layout.preferredHeight: grid.height / 3 - grid.rowSpacing
+
+                            Loader {
+                                anchors.fill: parent
+                                sourceComponent: modelData
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    centerListView.currentIndex = index;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Component {
+            id: centerCpuChipComponent
             RowLayout {
                 width: parent.width
                 height: parent.height
@@ -99,13 +157,13 @@ Window {
                 Rectangle {
                     Layout.preferredWidth: parent.width * 0.65
                     Layout.fillHeight: true
-                    color: "lightgray"
+                    color: "transparent"
                 }
                 Rectangle {
                     color: "transparent"
                     Layout.preferredWidth: parent.width * 0.34
                     Layout.preferredHeight: parent.height * 0.65
-                    MenuSvg {}
+                    CpuChip {}
                 }
                 Item {
                     Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
@@ -122,7 +180,7 @@ Window {
                 Rectangle {
                     Layout.preferredWidth: parent.width * 0.65
                     Layout.fillHeight: true
-                    color: "lightgray"
+                    color: "transparent"
                 }
                 Rectangle {
                     color: "transparent"
@@ -145,7 +203,7 @@ Window {
                 Rectangle {
                     Layout.preferredWidth: parent.width * 0.65
                     Layout.fillHeight: true
-                    color: "lightgray"
+                    color: "transparent"
                 }
                 Rectangle {
                     color: "transparent"
@@ -175,6 +233,29 @@ Window {
                     Layout.preferredWidth: parent.width * 0.34
                     Layout.preferredHeight: parent.height * 0.65
                     Serial {}
+                }
+                Item {
+                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
+                }
+            }
+        }
+        Component {
+            id: centerCanComponent
+            RowLayout {
+                width: parent.width
+                height: parent.height
+                spacing: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                Rectangle {
+                    Layout.preferredWidth: parent.width * 0.65
+                    Layout.fillHeight: true
+                    color: "transparent"
+                }
+                Rectangle {
+                    color: "transparent"
+                    Layout.preferredWidth: parent.width * 0.34
+                    Layout.preferredHeight: parent.height * 0.65
+                    CanSvg {}
                 }
                 Item {
                     Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
@@ -273,7 +354,7 @@ Window {
         preferredHighlightBegin: width / 2 - 25
         preferredHighlightEnd: width / 2 - 25
         highlightRangeMode: ListView.StrictlyEnforceRange
-        model: [menuComponent, memoryComponent, diskComponent, serialComponent, videoComponent, ethernetComponent, usbComponent]
+        model: [menuComponent, cpuChipComponent, memoryComponent, diskComponent, serialComponent, canComponent, videoComponent, ethernetComponent, usbComponent]
 
         delegate: Item {
             id: delegateItem
@@ -311,6 +392,10 @@ Window {
             MenuSvg {}
         }
         Component {
+            id: cpuChipComponent
+            CpuChip {}
+        }
+        Component {
             id: memoryComponent
             Memory {}
         }
@@ -321,6 +406,10 @@ Window {
         Component {
             id: serialComponent
             Serial {}
+        }
+        Component {
+            id: canComponent
+            CanSvg {}
         }
         Component {
             id: videoComponent

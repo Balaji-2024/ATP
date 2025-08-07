@@ -7,8 +7,8 @@ Item {
     anchors.fill: parent
     Shape {
         ShapePath {
-            strokeWidth: 4
-            strokeColor: ctheme === "light" ? Theme.lightThemeText : Theme.darkThemeText
+            strokeWidth: 2
+            strokeColor: Theme.text
             fillColor: "transparent"
             scale: Qt.size(width / 24, height / 24)
             PathSvg {
