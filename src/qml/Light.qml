@@ -8,7 +8,7 @@ Item {
     Shape {
         anchors.fill: parent
         ShapePath {
-            strokeWidth: 2
+            strokeWidth: 1
             strokeColor: Theme.text
             fillColor: Theme.text
             scale: Qt.size(width / 24, height / 24)

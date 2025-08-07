@@ -15,7 +15,7 @@ Item {
         ShapePath {
             strokeWidth: 2
             strokeColor: "transparent"
-            fillColor: "red"
+            fillColor: "#F54927"
             // scale: Qt.size(width / 24, height / 24)
             PathSvg {
                 path: "M12 4a8 8 0 1 0 0.0001 0 Z"
