@@ -5,10 +5,10 @@ import CustomTheme 1.0
 
 Item {
     id: root
-    // Pass theme from outside (default: "light")
+    anchors.fill: parent
     property color stroke: Theme.text
     Shape {
-        anchors.fill: parent
+
         ShapePath {
             strokeWidth: 2
             strokeColor: stroke

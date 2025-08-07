@@ -5,9 +5,8 @@ import CustomTheme 1.0
 
 Item {
     id: root
+    anchors.fill: parent
     Shape {
-        anchors.fill: parent
-
         ShapePath {
             strokeWidth: 2
             strokeColor: Theme.text

@@ -71,6 +71,10 @@ Window {
         SwipeView {
             id: centerListView
             anchors.fill: parent
+            onCurrentIndexChanged: {
+                listView.currentIndex = centerListView.currentIndex;
+                listView.positionViewAtIndex(centerListView.currentIndex, ListView.Center);
+            }
 
             Repeater {
                 model: [centerMenuComponent, centerMemoryComponent, centerDiskComponent, centerSerialComponent, centerVideoComponent, centerEthernetComponent, centerUsbComponent, keypadComponent]
@@ -90,7 +94,7 @@ Window {
             RowLayout {
                 width: parent.width
                 height: parent.height
-                spacing:0
+                spacing: 0
                 anchors.horizontalCenter: parent.horizontalCenter
                 Rectangle {
                     Layout.preferredWidth: parent.width * 0.65
@@ -98,9 +102,10 @@ Window {
                     color: "lightgray"
                 }
                 Rectangle {
+                    color: "transparent"
                     Layout.preferredWidth: parent.width * 0.34
-                    Layout.preferredHeight: parent.height*0.65
-                    Keypad {}
+                    Layout.preferredHeight: parent.height * 0.65
+                    MenuSvg {}
                 }
                 Item {
                     Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
@@ -109,27 +114,141 @@ Window {
         }
         Component {
             id: centerMemoryComponent
-            Memory {}
+            RowLayout {
+                width: parent.width
+                height: parent.height
+                spacing: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                Rectangle {
+                    Layout.preferredWidth: parent.width * 0.65
+                    Layout.fillHeight: true
+                    color: "lightgray"
+                }
+                Rectangle {
+                    color: "transparent"
+                    Layout.preferredWidth: parent.width * 0.34
+                    Layout.preferredHeight: parent.height * 0.65
+                    Memory {}
+                }
+                Item {
+                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
+                }
+            }
         }
         Component {
             id: centerDiskComponent
-            DiskSvg {}
+            RowLayout {
+                width: parent.width
+                height: parent.height
+                spacing: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                Rectangle {
+                    Layout.preferredWidth: parent.width * 0.65
+                    Layout.fillHeight: true
+                    color: "lightgray"
+                }
+                Rectangle {
+                    color: "transparent"
+                    Layout.preferredWidth: parent.width * 0.34
+                    Layout.preferredHeight: parent.height * 0.65
+                    DiskSvg {}
+                }
+                Item {
+                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
+                }
+            }
         }
         Component {
             id: centerSerialComponent
-            Serial {}
+            RowLayout {
+                width: parent.width
+                height: parent.height
+                spacing: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                Rectangle {
+                    Layout.preferredWidth: parent.width * 0.65
+                    Layout.fillHeight: true
+                    color: "transparent"
+                }
+                Rectangle {
+                    color: "transparent"
+                    Layout.preferredWidth: parent.width * 0.34
+                    Layout.preferredHeight: parent.height * 0.65
+                    Serial {}
+                }
+                Item {
+                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
+                }
+            }
         }
         Component {
             id: centerVideoComponent
-            Video {}
+            RowLayout {
+                width: parent.width
+                height: parent.height
+                spacing: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                Rectangle {
+                    Layout.preferredWidth: parent.width * 0.65
+                    Layout.fillHeight: true
+                    color: "transparent"
+                }
+                Rectangle {
+                    color: "transparent"
+                    Layout.preferredWidth: parent.width * 0.34
+                    Layout.preferredHeight: parent.height * 0.65
+                    Video {}
+                }
+                Item {
+                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
+                }
+            }
         }
         Component {
             id: centerEthernetComponent
-            Ethernet {}
+            RowLayout {
+                width: parent.width
+                height: parent.height
+                spacing: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                Rectangle {
+                    Layout.preferredWidth: parent.width * 0.65
+                    Layout.fillHeight: true
+                    color: "transparent"
+                }
+                Rectangle {
+                    color: "transparent"
+                    Layout.preferredWidth: parent.width * 0.34
+                    Layout.preferredHeight: parent.height * 0.65
+                    Ethernet {}
+                }
+                Item {
+                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
+                }
+            }
         }
         Component {
             id: centerUsbComponent
-            Usb {}
+            RowLayout {
+                width: parent.width
+                height: parent.height
+                spacing: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                Rectangle {
+                    Layout.preferredWidth: parent.width * 0.65
+                    Layout.fillHeight: true
+                    color: "transparent"
+                }
+                Rectangle {
+                    color: "transparent"
+                    Layout.preferredWidth: parent.width * 0.34
+                    Layout.preferredHeight: parent.height * 0.65
+                    Usb {}
+                }
+                Item {
+                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
+                }
+            }
         }
         Component {
             id: keypadComponent
@@ -163,61 +282,61 @@ Window {
             opacity: ListView.isCurrentItem ? 1.0 : 0.5
             scale: ListView.isCurrentItem ? 1.5 : 1.0
             Behavior on opacity {
-            NumberAnimation {
-                duration: 150
+                NumberAnimation {
+                    duration: 150
+                }
+            }
+            Behavior on scale {
+                NumberAnimation {
+                    duration: 150
+                }
+            }
+            Loader {
+                anchors.fill: parent
+                sourceComponent: modelData  // ✅ OK here, inside Loader
+            }
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                    listView.currentIndex = index;
+                    listView.positionViewAtIndex(index, ListView.Center);
+                    centerListView.currentIndex = index;
+                }
             }
         }
-        Behavior on scale {
-        NumberAnimation {
-            duration: 150
-        }
-    }
-    Loader {
-        anchors.fill: parent
-        sourceComponent: modelData  // ✅ OK here, inside Loader
-    }
-    MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
-        onClicked: {
-            listView.currentIndex = index;
-            listView.positionViewAtIndex(index, ListView.Center);
-            centerListView.currentIndex = index;
-        }
-    }
-}
 
-Component {
-    id: menuComponent
-    MenuSvg {}
-}
-Component {
-    id: memoryComponent
-    Memory {}
-}
-Component {
-    id: diskComponent
-    DiskSvg {}
-}
-Component {
-    id: serialComponent
-    Serial {}
-}
-Component {
-    id: videoComponent
-    Video {}
-}
-Component {
-    id: ethernetComponent
-    Ethernet {}
-}
-Component {
-    id: usbComponent
-    Usb {}
-}
-Component.onCompleted: {
-    currentIndex = 0; // Start with the first item
-    positionViewAtIndex(currentIndex, ListView.Center);
-}
-}
+        Component {
+            id: menuComponent
+            MenuSvg {}
+        }
+        Component {
+            id: memoryComponent
+            Memory {}
+        }
+        Component {
+            id: diskComponent
+            DiskSvg {}
+        }
+        Component {
+            id: serialComponent
+            Serial {}
+        }
+        Component {
+            id: videoComponent
+            Video {}
+        }
+        Component {
+            id: ethernetComponent
+            Ethernet {}
+        }
+        Component {
+            id: usbComponent
+            Usb {}
+        }
+        Component.onCompleted: {
+            currentIndex = 0; // Start with the first item
+            positionViewAtIndex(currentIndex, ListView.Center);
+        }
+    }
 }
