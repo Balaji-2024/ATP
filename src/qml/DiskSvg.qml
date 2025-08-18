@@ -15,7 +15,7 @@ Item {
         // }
 
         ShapePath {
-            strokeColor: Theme.text
+            strokeColor: Theme.svgColor
             strokeWidth: 2
             fillColor: "transparent"
             scale: Qt.size(root.width / 64, root.height / 64)
@@ -24,7 +24,7 @@ Item {
             }
         }
         ShapePath {
-            strokeColor: Theme.text
+            strokeColor: Theme.svgColor
             strokeWidth: 2
             fillColor: "transparent"
             scale: Qt.size(root.width / 64, root.height / 64)
@@ -34,7 +34,7 @@ Item {
         }
 
         ShapePath {
-            strokeColor: Theme.text
+            strokeColor: Theme.svgColor
             strokeWidth: 2
             fillColor: "transparent"
             scale: Qt.size(root.width / 64, root.height / 64)

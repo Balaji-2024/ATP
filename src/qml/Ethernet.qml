@@ -9,7 +9,7 @@ Item {
     Shape {
         ShapePath {
             strokeWidth: 2
-            strokeColor: Theme.text
+            strokeColor: Theme.svgColor
             fillColor: "transparent"
             // Scale for 24x24 viewBox
             scale: Qt.size(root.width / 24, root.height / 24)

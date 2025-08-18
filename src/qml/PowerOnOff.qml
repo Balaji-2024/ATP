@@ -23,7 +23,7 @@ Item {
         }
         ShapePath {
             strokeWidth: 2
-            strokeColor: Theme.text
+            strokeColor: Theme.svgColor
             fillColor: "transparent"
             // scale: Qt.size(width / 24, height / 24)
             PathSvg {

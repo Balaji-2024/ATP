@@ -9,16 +9,23 @@ Window {
     visible: true
     width: 500
     height: 500
-    // visibility: "FullScreen"
-    // flags: Qt.FramelessWindowHint
     color: Theme.background
+
     Rectangle {
         id: topBar
         width: parent.width
         height: 35
-        anchors.right: parent.right
-        Component.onCompleted: Theme.current = "dark"
         color: "transparent"
+        Component.onCompleted: Theme.current = "dark"
+
+        Text {
+            anchors.centerIn: parent
+            text: "Drivers Instrument panel-ATP"
+            color: Theme.text
+            font.pixelSize: parent.width * 0.03
+            font.bold: true
+        }
+
         PowerOnOff {
             id: poweroff
             anchors.top: parent.top
@@ -31,10 +38,10 @@ Window {
                 onClicked: Qt.quit()
             }
         }
-        // Toggle to Dark Mode
+
         Dark {
             id: dark
-            visible: Theme.current === "light" // show dark icon in light mode
+            visible: Theme.current === "light"
             width: 35
             height: 35
             anchors.top: parent.top
@@ -45,10 +52,10 @@ Window {
                 onClicked: Theme.current = "dark"
             }
         }
-        // Toggle to Light Mode
+
         Light {
             id: light
-            visible: Theme.current === "dark" // show light icon in dark mode
+            visible: Theme.current === "dark"
             width: 35
             height: 35
             anchors.top: parent.top
@@ -64,10 +71,12 @@ Window {
     Rectangle {
         id: centerWindow
         anchors.top: topBar.bottom
+        anchors.topMargin: 10
         anchors.bottom: listView.top
         anchors.left: parent.left
         anchors.right: parent.right
         color: "transparent"
+
         SwipeView {
             id: centerListView
             anchors.fill: parent
@@ -76,12 +85,14 @@ Window {
                 listView.positionViewAtIndex(centerListView.currentIndex, ListView.Center);
             }
 
+            // ✅ Store all page components in a property array
+            property var pages: [centerMenuComponent, centerCpuChipComponent, centerMemoryComponent, centerDiskComponent, centerSerialComponent, centerCanComponent, centerVideoComponent, centerEthernetComponent, centerUsbComponent]
+
             Repeater {
-                model: [centerMenuComponent, centerCpuChipComponent, centerMemoryComponent, centerDiskComponent, centerSerialComponent, centerCanComponent, centerVideoComponent, centerEthernetComponent, centerUsbComponent, keypadComponent]
+                model: centerListView.pages
                 Item {
                     width: centerListView.width
                     height: centerListView.height
-
                     Loader {
                         anchors.fill: parent
                         sourceComponent: modelData
@@ -89,254 +100,301 @@ Window {
                 }
             }
         }
-        Component {
-            id: centerMenuComponent
+    }
+
+    // ===================== Components =====================
+    Component {
+        id: centerMenuComponent
+        Rectangle {
+            anchors.fill: parent
+            color: "transparent"
+            Image {
+                id: parasLogo
+                source: "qrc:/png/assets/paras_logo.png"
+                anchors.top: parent.top
+                anchors.left: parent.left
+                width: parent.width * 0.25
+                height: parent.height * 0.25
+                scale: 1.5
+                fillMode: Image.PreserveAspectFit
+            }
+
+            Image {
+                id: cvrdeLogo
+                source: "qrc:/png/assets/CVRDE_LOGO.png"
+                anchors.top: parent.top
+                anchors.right: parent.right
+                width: parent.width * 0.20
+                height: parent.height * 0.20
+                fillMode: Image.PreserveAspectFit
+            }
+
+            GridLayout {
+                id: grid
+                width: parent.width * 0.6
+                height: parent.height * 0.6
+                anchors.centerIn: parent
+                rowSpacing: 2.5
+                columnSpacing: 3.5
+                columns: 3
+
+                Repeater {
+                    model: [menuComponent, cpuChipComponent, memoryComponent, diskComponent, serialComponent, canComponent, videoComponent, ethernetComponent, usbComponent]
+                    delegate: Item {
+                        Layout.preferredWidth: grid.width / 3 - grid.columnSpacing
+                        Layout.preferredHeight: grid.height / 3 - grid.rowSpacing
+
+                        Loader {
+                            anchors.fill: parent
+                            sourceComponent: modelData
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: centerListView.currentIndex = index
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: centerCpuChipComponent
+        RowLayout {
+            id: root
+            width: parent.width
+            height: parent.height
+            spacing: 0
+            anchors.horizontalCenter: parent.horizontalCenter
             Rectangle {
-                anchors.fill: parent
+                Layout.preferredWidth: parent.width * 0.65
+                Layout.fillHeight: true
                 color: "transparent"
-                Image {
-                    id: cvrdeLogo
-                    source: "qrc:/png/assets/CVRDE_LOGO.png"
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    width: parent.width * 0.25
-                    height: parent.height * 0.25
-                    fillMode: Image.PreserveAspectFit
+                Flickable {
+                    id: cpuFlick
+                    anchors.fill: parent
+                    contentWidth: parent.width
+                    contentHeight: cpuTextArea.paintedHeight
+                    boundsBehavior: Flickable.StopAtBounds
+                    flickableDirection: Flickable.VerticalFlick
+                    clip: true
+                    interactive: true
+
+                    TextArea {
+                        id: cpuTextArea
+                        width: parent.width
+                        readOnly: true
+                        wrapMode: Text.Wrap
+                        color: Theme.text
+
+                        function appendText(newText) {
+                            cpuTextArea.text += newText + "\n";
+                            cpuFlick.contentY = cpuFlick.contentHeight - cpuFlick.height;
+                        }
+                    }
                 }
-                Image {
-                    id: parasLogo
-                    source: "qrc:/png/assets/paras_logo.png"
-                    anchors.top: parent.top
-                    anchors.right: parent.right
-                    width: parent.width * 0.25
-                    height: parent.height * 0.25
-                    scale: 1.5
-                    fillMode: Image.PreserveAspectFit
-                }
-                GridLayout {
-                    id: grid
-                    width: parent.width * 0.6
-                    height: parent.height * 0.6
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    rowSpacing: 2.5
-                    columnSpacing: 3.5
-                    columns: 4  // Add this to fix layout into a 4-column grid
-
-                    Repeater {
-                        model: [menuComponent, cpuChipComponent, memoryComponent, diskComponent, serialComponent, canComponent, videoComponent, ethernetComponent, usbComponent]
-
-                        delegate: Item {
-                            Layout.preferredWidth: grid.width / 4 - grid.columnSpacing
-                            Layout.preferredHeight: grid.height / 3 - grid.rowSpacing
-
-                            Loader {
-                                anchors.fill: parent
-                                sourceComponent: modelData
-                            }
-
+            }
+            Rectangle {
+                color: "transparent"
+                Layout.preferredWidth: parent.width * 0.34
+                Layout.preferredHeight: parent.height * 0.65
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+                    Rectangle {
+                        color: "transparent"
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: parent.height / 2
+                        CpuChip {}
+                    }
+                    Rectangle {
+                        color: "transparent"
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: parent.height / 2
+                        Text {
+                            text: "CPU Information"
+                            color: Theme.text
+                            font.pixelSize: parent.width * 0.1
+                            font.bold: true
+                            anchors.centerIn: parent
                             MouseArea {
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
-                                    centerListView.currentIndex = index;
+                                    if (appInterface) {
+                                        appInterface.cpuInfo();
+                                    } else {
+                                        console.log("interfaceObj is undefined");
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
-        Component {
-            id: centerCpuChipComponent
-            RowLayout {
-                width: parent.width
-                height: parent.height
-                spacing: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                Rectangle {
-                    Layout.preferredWidth: parent.width * 0.65
-                    Layout.fillHeight: true
-                    color: "transparent"
-                }
-                Rectangle {
-                    color: "transparent"
-                    Layout.preferredWidth: parent.width * 0.34
-                    Layout.preferredHeight: parent.height * 0.65
-                    CpuChip {}
-                }
-                Item {
-                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
-                }
+            Component.onCompleted: {
+                // Connect the C++ signal to a JS function
+                appInterface.cpuInfoUpdated.connect(function (cpuStr) {
+                    cpuTextArea.appendText(cpuStr);
+                });
             }
-        }
-        Component {
-            id: centerMemoryComponent
-            RowLayout {
-                width: parent.width
-                height: parent.height
-                spacing: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                Rectangle {
-                    Layout.preferredWidth: parent.width * 0.65
-                    Layout.fillHeight: true
-                    color: "transparent"
-                }
-                Rectangle {
-                    color: "transparent"
-                    Layout.preferredWidth: parent.width * 0.34
-                    Layout.preferredHeight: parent.height * 0.65
-                    Memory {}
-                }
-                Item {
-                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
-                }
+            Item {
+                Layout.preferredWidth: parent.width * 0.01
             }
-        }
-        Component {
-            id: centerDiskComponent
-            RowLayout {
-                width: parent.width
-                height: parent.height
-                spacing: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                Rectangle {
-                    Layout.preferredWidth: parent.width * 0.65
-                    Layout.fillHeight: true
-                    color: "transparent"
-                }
-                Rectangle {
-                    color: "transparent"
-                    Layout.preferredWidth: parent.width * 0.34
-                    Layout.preferredHeight: parent.height * 0.65
-                    DiskSvg {}
-                }
-                Item {
-                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
-                }
-            }
-        }
-        Component {
-            id: centerSerialComponent
-            RowLayout {
-                width: parent.width
-                height: parent.height
-                spacing: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                Rectangle {
-                    Layout.preferredWidth: parent.width * 0.65
-                    Layout.fillHeight: true
-                    color: "transparent"
-                }
-                Rectangle {
-                    color: "transparent"
-                    Layout.preferredWidth: parent.width * 0.34
-                    Layout.preferredHeight: parent.height * 0.65
-                    Serial {}
-                }
-                Item {
-                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
-                }
-            }
-        }
-        Component {
-            id: centerCanComponent
-            RowLayout {
-                width: parent.width
-                height: parent.height
-                spacing: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                Rectangle {
-                    Layout.preferredWidth: parent.width * 0.65
-                    Layout.fillHeight: true
-                    color: "transparent"
-                }
-                Rectangle {
-                    color: "transparent"
-                    Layout.preferredWidth: parent.width * 0.34
-                    Layout.preferredHeight: parent.height * 0.65
-                    CanSvg {}
-                }
-                Item {
-                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
-                }
-            }
-        }
-        Component {
-            id: centerVideoComponent
-            RowLayout {
-                width: parent.width
-                height: parent.height
-                spacing: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                Rectangle {
-                    Layout.preferredWidth: parent.width * 0.65
-                    Layout.fillHeight: true
-                    color: "transparent"
-                }
-                Rectangle {
-                    color: "transparent"
-                    Layout.preferredWidth: parent.width * 0.34
-                    Layout.preferredHeight: parent.height * 0.65
-                    Video {}
-                }
-                Item {
-                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
-                }
-            }
-        }
-        Component {
-            id: centerEthernetComponent
-            RowLayout {
-                width: parent.width
-                height: parent.height
-                spacing: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                Rectangle {
-                    Layout.preferredWidth: parent.width * 0.65
-                    Layout.fillHeight: true
-                    color: "transparent"
-                }
-                Rectangle {
-                    color: "transparent"
-                    Layout.preferredWidth: parent.width * 0.34
-                    Layout.preferredHeight: parent.height * 0.65
-                    Ethernet {}
-                }
-                Item {
-                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
-                }
-            }
-        }
-        Component {
-            id: centerUsbComponent
-            RowLayout {
-                width: parent.width
-                height: parent.height
-                spacing: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                Rectangle {
-                    Layout.preferredWidth: parent.width * 0.65
-                    Layout.fillHeight: true
-                    color: "transparent"
-                }
-                Rectangle {
-                    color: "transparent"
-                    Layout.preferredWidth: parent.width * 0.34
-                    Layout.preferredHeight: parent.height * 0.65
-                    Usb {}
-                }
-                Item {
-                    Layout.preferredWidth: parent.width * 0.01  // Adjust as needed
-                }
-            }
-        }
-        Component {
-            id: keypadComponent
-            Keypad {}
         }
     }
-    // }
+
+    Component {
+        id: centerMemoryComponent
+        RowLayout {
+            width: parent.width
+            height: parent.height
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.65
+                Layout.fillHeight: true
+                color: "transparent"
+            }
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.34
+                Layout.preferredHeight: parent.height * 0.65
+                color: "transparent"
+                Memory {}
+            }
+            Item {
+                Layout.preferredWidth: parent.width * 0.01
+            }
+        }
+    }
+    Component {
+        id: centerDiskComponent
+        RowLayout {
+            width: parent.width
+            height: parent.height
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.65
+                Layout.fillHeight: true
+                color: "transparent"
+            }
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.34
+                Layout.preferredHeight: parent.height * 0.65
+                color: "transparent"
+                DiskSvg {}
+            }
+            Item {
+                Layout.preferredWidth: parent.width * 0.01
+            }
+        }
+    }
+    Component {
+        id: centerSerialComponent
+        RowLayout {
+            width: parent.width
+            height: parent.height
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.65
+                Layout.fillHeight: true
+                color: "transparent"
+            }
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.34
+                Layout.preferredHeight: parent.height * 0.65
+                color: "transparent"
+                Serial {}
+            }
+            Item {
+                Layout.preferredWidth: parent.width * 0.01
+            }
+        }
+    }
+    Component {
+        id: centerCanComponent
+        RowLayout {
+            width: parent.width
+            height: parent.height
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.65
+                Layout.fillHeight: true
+                color: "transparent"
+            }
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.34
+                Layout.preferredHeight: parent.height * 0.65
+                color: "transparent"
+                CanSvg {}
+            }
+            Item {
+                Layout.preferredWidth: parent.width * 0.01
+            }
+        }
+    }
+    Component {
+        id: centerVideoComponent
+        RowLayout {
+            width: parent.width
+            height: parent.height
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.65
+                Layout.fillHeight: true
+                color: "transparent"
+            }
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.34
+                Layout.preferredHeight: parent.height * 0.65
+                color: "transparent"
+                Video {}
+            }
+            Item {
+                Layout.preferredWidth: parent.width * 0.01
+            }
+        }
+    }
+    Component {
+        id: centerEthernetComponent
+        RowLayout {
+            width: parent.width
+            height: parent.height
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.65
+                Layout.fillHeight: true
+                color: "transparent"
+            }
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.34
+                Layout.preferredHeight: parent.height * 0.65
+                color: "transparent"
+                Ethernet {}
+            }
+            Item {
+                Layout.preferredWidth: parent.width * 0.01
+            }
+        }
+    }
+    Component {
+        id: centerUsbComponent
+        RowLayout {
+            width: parent.width
+            height: parent.height
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.65
+                Layout.fillHeight: true
+                color: "transparent"
+            }
+            Rectangle {
+                Layout.preferredWidth: parent.width * 0.34
+                Layout.preferredHeight: parent.height * 0.65
+                color: "transparent"
+                Usb {}
+            }
+            Item {
+                Layout.preferredWidth: parent.width * 0.01
+            }
+        }
+    }
+
+    // ===================== Bottom ListView =====================
     ListView {
         id: listView
         anchors.bottom: parent.bottom
@@ -349,19 +407,19 @@ Window {
         snapMode: ListView.SnapToItem
         highlightMoveDuration: 1500
         highlightMoveVelocity: -1
-        // highlightMoveEasing: Easing.InOutQuad
         boundsBehavior: Flickable.StopAtBounds
         preferredHighlightBegin: width / 2 - 25
         preferredHighlightEnd: width / 2 - 25
         highlightRangeMode: ListView.StrictlyEnforceRange
+
         model: [menuComponent, cpuChipComponent, memoryComponent, diskComponent, serialComponent, canComponent, videoComponent, ethernetComponent, usbComponent]
 
         delegate: Item {
-            id: delegateItem
             width: 50
             height: 50
             opacity: ListView.isCurrentItem ? 1.0 : 0.5
             scale: ListView.isCurrentItem ? 1.5 : 1.0
+
             Behavior on opacity {
                 NumberAnimation {
                     duration: 150
@@ -372,10 +430,12 @@ Window {
                     duration: 150
                 }
             }
+
             Loader {
                 anchors.fill: parent
-                sourceComponent: modelData  // ✅ OK here, inside Loader
+                sourceComponent: modelData
             }
+
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
@@ -387,45 +447,47 @@ Window {
             }
         }
 
-        Component {
-            id: menuComponent
-            MenuSvg {}
-        }
-        Component {
-            id: cpuChipComponent
-            CpuChip {}
-        }
-        Component {
-            id: memoryComponent
-            Memory {}
-        }
-        Component {
-            id: diskComponent
-            DiskSvg {}
-        }
-        Component {
-            id: serialComponent
-            Serial {}
-        }
-        Component {
-            id: canComponent
-            CanSvg {}
-        }
-        Component {
-            id: videoComponent
-            Video {}
-        }
-        Component {
-            id: ethernetComponent
-            Ethernet {}
-        }
-        Component {
-            id: usbComponent
-            Usb {}
-        }
         Component.onCompleted: {
-            currentIndex = 0; // Start with the first item
+            currentIndex = 0;
             positionViewAtIndex(currentIndex, ListView.Center);
         }
+    }
+
+    // ===================== Mini components for Loader in ListView =====================
+    Component {
+        id: menuComponent
+        MenuSvg {}
+    }
+    Component {
+        id: cpuChipComponent
+        CpuChip {}
+    }
+    Component {
+        id: memoryComponent
+        Memory {}
+    }
+    Component {
+        id: diskComponent
+        DiskSvg {}
+    }
+    Component {
+        id: serialComponent
+        Serial {}
+    }
+    Component {
+        id: canComponent
+        CanSvg {}
+    }
+    Component {
+        id: videoComponent
+        Video {}
+    }
+    Component {
+        id: ethernetComponent
+        Ethernet {}
+    }
+    Component {
+        id: usbComponent
+        Usb {}
     }
 }

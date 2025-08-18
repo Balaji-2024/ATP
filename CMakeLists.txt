@@ -7,7 +7,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Network SerialPort)
 
 # Resource file
 qt_add_resources(APP_RESOURCES ${CMAKE_SOURCE_DIR}/resources.qrc)
@@ -15,11 +15,12 @@ qt_add_resources(APP_RESOURCES ${CMAKE_SOURCE_DIR}/resources.qrc)
 # Source files
 set(SOURCES
     src/cpp/main.cpp
+    src/cpp/interface.cpp
     ${APP_RESOURCES}
 )
 
 # Header files (for IDEs, not strictly necessary)
-set(HEADERS
+set(HEADERS src/cpp/interface.h
 )
 
 # Build executable
@@ -30,6 +31,8 @@ target_link_libraries(ATP
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
+    Qt6::Network
+    Qt6::SerialPort
 )
 
 # Include directories (optional if structure is flat)

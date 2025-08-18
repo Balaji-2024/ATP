@@ -6,12 +6,11 @@ import CustomTheme 1.0
 Item {
     id: root
     anchors.fill: parent
-    property color stroke: Theme.text
     Shape {
 
         ShapePath {
             strokeWidth: 2
-            strokeColor: stroke
+            strokeColor: Theme.svgColor
             fillColor: "transparent"
             // Scale for 24x24 viewBox
             scale: Qt.size(root.width / 24, root.height / 24)

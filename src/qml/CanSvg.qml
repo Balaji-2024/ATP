@@ -8,8 +8,8 @@ Item {
     Shape {
         ShapePath {
             strokeWidth: 2
-            strokeColor: Theme.text
-            fillColor: Theme.text
+            strokeColor: Theme.svgColor
+            fillColor: Theme.svgColor
             scale: Qt.size(width / 512.275, height / 512.275)
             PathSvg {
                 path: "M70,70 a30,30 0 1,0 0.1,0Z M70,190 a30,30 0 1,0 0.1,0 Z M450,250 a30,30 0 1,0 0.1,0Z M450,380 a30,30 0 1,0 0.1,0Z "
@@ -17,7 +17,7 @@ Item {
         }
         ShapePath {
             strokeWidth: 2
-            strokeColor: Theme.text
+            strokeColor: Theme.svgColor
             fillColor: "transparent"
             scale: Qt.size(width / 512.275, height / 512.275)
             PathSvg {
@@ -26,7 +26,7 @@ Item {
         }
         ShapePath {
             strokeWidth: 2
-            strokeColor: Theme.text
+            strokeColor: Theme.svgColor
             fillColor: "transparent"
             scale: Qt.size(width / 512.275, height / 512.275)
             PathSvg {
