@@ -29,7 +29,7 @@ Item {
             fillColor: "transparent"
             scale: Qt.size(root.width / 64, root.height / 64)
             PathSvg {
-                path: "M32,24A15.973,14.473,0,0,0,21.677,48l-3.6,3.6 M22,48 A14,14,0,1,0,32,24 M22,48 l4,-4"
+                path: "M32, 24A15.973, 14.473, 0, 0, 0, 21.677, 48l-3.6, 3.6 M22, 48 A14, 14, 0, 1, 0, 32, 24 M22, 48 l4, -4"
             }
         }
 
@@ -39,15 +39,16 @@ Item {
             fillColor: "transparent"
             scale: Qt.size(root.width / 64, root.height / 64)
             PathSvg {
-                path: "M33,34 A2,2,0,1,1,33,44 A2,2,0,1,1,33,34"
+                path: "M33, 34 A2, 2, 0, 1, 1, 33, 44 A2, 2, 0, 1, 1, 33, 34"
             }
         }
     }
     Text {
         text: "Disk"
         transform: Translate {
-            y: -10
+            y:-root.height*0.15
         }
+        font.pixelSize: Math.min(root.width, root.height) * 0.2
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom
         color: Theme.text

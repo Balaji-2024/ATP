@@ -20,8 +20,9 @@ Item {
     Text {
         text: "Menu"
         transform: Translate {
-            y: -10
+            y:-root.height*0.15
         }
+        font.pixelSize: Math.min(root.width, root.height) * 0.2
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom
         color: Theme.text

@@ -12,7 +12,7 @@ Item {
             fillColor: Theme.svgColor
             scale: Qt.size(width / 512.275, height / 512.275)
             PathSvg {
-                path: "M70,70 a30,30 0 1,0 0.1,0Z M70,190 a30,30 0 1,0 0.1,0 Z M450,250 a30,30 0 1,0 0.1,0Z M450,380 a30,30 0 1,0 0.1,0Z "
+                path: "M70, 70 a30, 30 0 1, 0 0.1, 0Z M70, 190 a30, 30 0 1, 0 0.1, 0 Z M450, 250 a30, 30 0 1, 0 0.1, 0Z M450, 380 a30, 30 0 1, 0 0.1, 0Z "
             }
         }
         ShapePath {
@@ -21,7 +21,7 @@ Item {
             fillColor: "transparent"
             scale: Qt.size(width / 512.275, height / 512.275)
             PathSvg {
-                path: "M90,100 h156 a30,30 0 0,1 30,30 v120 a30,30 0 0,0 30,30 h120"
+                path: "M90, 100 h156 a30, 30 0 0, 1 30, 30 v120 a30, 30 0 0, 0 30, 30 h120"
             }
         }
         ShapePath {
@@ -30,15 +30,16 @@ Item {
             fillColor: "transparent"
             scale: Qt.size(width / 512.275, height / 512.275)
             PathSvg {
-                path: "M90,220 h156 a30,30 0 0,1 30,30 v130 a30,30 0 0,0 30,30 h120"
+                path: "M90, 220 h156 a30, 30 0 0, 1 30, 30 v130 a30, 30 0 0, 0 30, 30 h120"
             }
         }
     }
     Text {
         text: "CAN"
         transform: Translate {
-            y: -10
+            y:-root.height*0.15
         }
+        font.pixelSize: Math.min(root.width, root.height) * 0.2
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom
         color: Theme.text
