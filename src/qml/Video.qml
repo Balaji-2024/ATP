@@ -19,7 +19,7 @@ Item {
         }
     }
     Text {
-        text: "Video"
+        text: "GlxGears"
         transform: Translate {
             y:-root.height*0.15
         }

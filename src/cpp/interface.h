@@ -9,14 +9,17 @@ class Interface : public QObject {
 public:
   explicit Interface(QObject *parent = nullptr);
   ~Interface();
-  void LinuxKernalVersion();
-  void averageLoad();
-  void freeMemory();
-  void swapMemory();
-  void ramInfo();
-  void diskinfo();
+  QString LinuxKernalVersion();
+  QString averageLoad();
+  QString freeMemory();
+  QString swapMemory();
+
   QString GetStdoutFromCommand(QString cmd);
-  Q_INVOKABLE void cpuInfo();
-signals:
-  void cpuInfoUpdated(const QString &cpuText);
+
+public slots:
+  // These slots can be connected to signals from the UI and can return values
+  QString cpuInfo();
+  QString diskInfo();
+  QString memInfo();
+  void slot_pingClicked(bool state);
 };

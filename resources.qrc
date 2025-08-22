@@ -14,6 +14,19 @@
         <file>src/qml/Video.qml</file>
         <file>src/qml/Keypad.qml</file>
         <file>src/qml/CanSvg.qml</file>
+        <file>src/qml/FuncKey.qml</file>
+        <file>src/qml/Touch.qml</file>
+        <file>src/qml/CpuChipPage.qml</file>
+        <file>src/qml/MemoryPage.qml</file>
+        <file>src/qml/DiskPage.qml</file>
+        <file>src/qml/SerialPage.qml</file>
+        <file>src/qml/CanPage.qml</file>
+        <file>src/qml/EthernetPage.qml</file>
+        <file>src/qml/MenuPage.qml</file>
+        <file>src/qml/UsbPage.qml</file>
+        <file>src/qml/FunKeyPage.qml</file>
+        <file>src/qml/GlxPage.qml</file>
+        <file>src/qml/TouchPage.qml</file>
     </qresource>
     <qresource prefix="/png">
         <file>assets/paras_logo.png</file>

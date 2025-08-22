@@ -13,12 +13,14 @@ QtObject {
             text: "#161200",
             background: "#e2c471",
             svgColor: "#ea3d2f01",
+            btnColor: "#f3f3f3",
             accent: "blue"
         },
         "dark": {
             text: "#a5a6d6",
             background: "#120f27",
             svgColor: "#c0a343",
+            btnColor: "#6b6650f3",
             accent: "cyan"
         },
         "solarized": {
@@ -34,6 +36,8 @@ QtObject {
     readonly property color background: themes[current].background
     readonly property color svgColor: themes[current].svgColor
     readonly property color accent: themes[current].accent
+    readonly property color btnColor: themes[current].btnColor
+
 
     // Fonts
     property string fontFamily: "Sans Serif"
