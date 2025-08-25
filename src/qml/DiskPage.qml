@@ -10,7 +10,7 @@ RowLayout {
     height: parent.height
     spacing: 0
     Rectangle {
-        Layout.preferredWidth: parent.width * 0.65
+        Layout.preferredWidth: parent.width * 0.75
         Layout.fillHeight: true
         color: "transparent"
         Flickable {
@@ -65,7 +65,7 @@ RowLayout {
     }
     Rectangle {
         color: "transparent"
-        Layout.preferredWidth: parent.width * 0.34
+        Layout.preferredWidth: parent.width * 0.24
         Layout.preferredHeight: parent.height * 0.65
         ColumnLayout {
             anchors.fill: parent

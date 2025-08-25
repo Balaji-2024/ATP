@@ -8,12 +8,12 @@ RowLayout {
     width: parent.width
     height: parent.height
     Rectangle {
-        Layout.preferredWidth: parent.width * 0.65
+        Layout.preferredWidth: parent.width * 0.75
         Layout.fillHeight: true
         color: "transparent"
     }
     Rectangle {
-        Layout.preferredWidth: parent.width * 0.34
+        Layout.preferredWidth: parent.width * 0.24
         Layout.preferredHeight: parent.height * 0.65
         color: "transparent"
         CanSvg {}

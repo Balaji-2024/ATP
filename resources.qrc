@@ -27,6 +27,7 @@
         <file>src/qml/FunKeyPage.qml</file>
         <file>src/qml/GlxPage.qml</file>
         <file>src/qml/TouchPage.qml</file>
+        <file>src/qml/VirtKeyboard.qml</file>
     </qresource>
     <qresource prefix="/png">
         <file>assets/paras_logo.png</file>

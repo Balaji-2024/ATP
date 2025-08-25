@@ -10,62 +10,143 @@ RowLayout {
     height: parent.height
     spacing: 0
     Rectangle {
-        Layout.preferredWidth: parent.width * 0.65
+        id: outerRect
+        Layout.preferredWidth: parent.width * 0.75
         Layout.fillHeight: true
         color: "transparent"
-        Flickable {
-            id: serialFlick
+
+        ColumnLayout {
             anchors.fill: parent
-            contentWidth: parent.width
-            contentHeight: serialTextArea.paintedHeight
-            boundsBehavior: Flickable.StopAtBounds
-            flickableDirection: Flickable.VerticalFlick
-            clip: true
-            interactive: false
+            spacing: 0
 
-            TextArea {
-                id: serialTextArea
-                width: parent.width
-                readOnly: true
-                wrapMode: Text.Wrap
-                color: Theme.text
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.preferredHeight: parent.height * 0.6
+                spacing: 0
 
-                function appendText(newText) {
-                    serialTextArea.text += newText + "\n";
-                    serialFlick.contentY = serialFlick.contentHeight - serialFlick.height;
-                }
-            }
-            MouseArea {
-                anchors.fill: parent
-                drag.target: null
+                Flickable {
+                    id: serialFlick
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    contentWidth: width
+                    contentHeight: serialTextArea.paintedHeight
+                    boundsBehavior: Flickable.StopAtBounds
+                    flickableDirection: Flickable.VerticalFlick
+                    clip: true
+                    interactive: false
 
-                onPressed: function (mouse) {
-                    serialFlick.startX = mouse.x;
-                    serialFlick.startY = mouse.y;
-                    serialFlick.interactive = true;
-                }
+                    TextArea {
+                        id: serialTextArea
+                        width: parent.width
+                        // readOnly: true
+                        wrapMode: Text.Wrap
+                        color: Theme.text
 
-                onPositionChanged: function (mouse) {
-                    serialFlick.dx = Math.abs(mouse.x - serialFlick.startX);
-                    serialFlick.dy = Math.abs(mouse.y - serialFlick.startY);
+                        function appendText(newText) {
+                            serialTextEdit.text += newText + "\n";
+                            serialTextEdit.cursorPosition = serialTextEdit.text.length;
 
-                    if (serialFlick.dx > serialFlick.dy) {
-                        serialFlick.interactive = false; // horizontal swipe → let parent handle
-                    } else {
-                        serialFlick.interactive = true;  // vertical swipe → Flickable handles
+                            // scroll to bottom
+                            serialFlick.contentY = serialFlick.contentHeight - serialFlick.height;
+                        }
                     }
+                    MouseArea {
+                        anchors.fill: parent
+                        drag.target: null
+
+                        onPressed: function (mouse) {
+                            serialFlick.startX = mouse.x;
+                            serialFlick.startY = mouse.y;
+                            serialFlick.interactive = true;
+                        }
+
+                        onPositionChanged: function (mouse) {
+                            serialFlick.dx = Math.abs(mouse.x - serialFlick.startX);
+                            serialFlick.dy = Math.abs(mouse.y - serialFlick.startY);
+
+                            if (serialFlick.dx > serialFlick.dy) {
+                                serialFlick.interactive = false; // horizontal swipe → let parent handle
+                            } else {
+                                serialFlick.interactive = true;  // vertical swipe → Flickable handles
+                            }
+                        }
+                    }
+
+                    property real startX: 0
+                    property real startY: 0
+                    property real dx: 0
+                    property real dy: 0
+                }
+
+                Rectangle {
+                    width: 1
+                    Layout.fillHeight: true
+                    color: Theme.btnColor
+                }
+
+                Flickable {
+                    id: rserialFlick
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    contentWidth: width
+                    contentHeight: rserialTextArea.paintedHeight
+                    boundsBehavior: Flickable.StopAtBounds
+                    flickableDirection: Flickable.VerticalFlick
+                    clip: true
+                    interactive: false
+
+                    TextArea {
+                        id: rserialTextArea
+                        width: parent.width
+                        readOnly: true
+                        wrapMode: Text.Wrap
+                        color: Theme.text
+
+                        function appendText(newText) {
+                            rserialTextArea.text += newText + "\n";
+                            rserialFlick.contentY = rserialFlick.contentHeight - rserialFlick.height;
+                        }
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        drag.target: null
+
+                        onPressed: function (mouse) {
+                            rserialFlick.startX = mouse.x;
+                            rserialFlick.startY = mouse.y;
+                            rserialFlick.interactive = true;
+                        }
+
+                        onPositionChanged: function (mouse) {
+                            rserialFlick.dx = Math.abs(mouse.x - rserialFlick.startX);
+                            rserialFlick.dy = Math.abs(mouse.y - rserialFlick.startY);
+
+                            if (rserialFlick.dx > rserialFlick.dy) {
+                                rserialFlick.interactive = false; // horizontal swipe → let parent handle
+                            } else {
+                                rserialFlick.interactive = true;  // vertical swipe → Flickable handles
+                            }
+                        }
+                    }
+
+                    property real startX: 0
+                    property real startY: 0
+                    property real dx: 0
+                    property real dy: 0
                 }
             }
-
-            property real startX: 0
-            property real startY: 0
-            property real dx: 0
-            property real dy: 0
+            // bottom half → keyboard
+            VirtKeyboard {
+                id: serialKeyboard
+                Layout.fillWidth: true
+                Layout.preferredHeight: parent.height * 0.4
+                target: serialTextArea
+            }
         }
     }
     Rectangle {
         color: "transparent"
-        Layout.preferredWidth: parent.width * 0.34
+        Layout.preferredWidth: parent.width * 0.24
         Layout.preferredHeight: parent.height * 0.65
         ColumnLayout {
             anchors.fill: parent
@@ -73,13 +154,14 @@ RowLayout {
             Rectangle {
                 color: "transparent"
                 Layout.fillWidth: true
-                Layout.preferredHeight: parent.height / 2
+                Layout.preferredHeight: parent.height * 0.6
                 Serial {}
             }
             Rectangle {
+                Layout.topMargin: 10
                 color: "transparent"
                 Layout.preferredWidth: parent.width * 0.9
-                Layout.preferredHeight: parent.height / 2
+                Layout.preferredHeight: parent.height * 0.4
                 Layout.alignment: Qt.AlignCenter
                 GridLayout {
                     id: sergrid
@@ -103,7 +185,7 @@ RowLayout {
                             anchors.fill: parent
                             radius: 10
                             color: Theme.btnColor
-                            border.color: "#0d47a1"
+                            border.color: Theme.btnBorder
                             border.width: 2
                         }
                         contentItem: Text {
@@ -137,7 +219,7 @@ RowLayout {
                             anchors.fill: parent
                             radius: 10
                             color: Theme.btnColor
-                            border.color: "#0d47a1"
+                            border.color: Theme.btnBorder
                             border.width: 2
                         }
 
@@ -164,7 +246,7 @@ RowLayout {
                             background: Rectangle {
                                 radius: 8
                                 color: Theme.btnColor
-                                border.color: "#0d47a1"
+                                border.color: Theme.btnBorder
                                 border.width: 2
                             }
 
@@ -180,33 +262,33 @@ RowLayout {
                         }
                     }
 
-                    Button {
-                        id: serialTestButton
-                        padding: 10
-                        Layout.columnSpan: 2
-                        Layout.alignment: Qt.AlignHCenter
-                        width: sergrid.width * 0.6      // 🔑 set button width
-                        height: sergrid.height * 0.3    // 🔑 set button height
+                    // Button {
+                    //     id: serialTestButton
+                    //     padding: 10
+                    //     Layout.columnSpan: 2
+                    //     Layout.alignment: Qt.AlignHCenter
+                    //     width: sergrid.width * 0.6      // 🔑 set button width
+                    //     height: sergrid.height * 0.3    // 🔑 set button height
 
-                        background: Rectangle {
-                            anchors.fill: parent        // 🔑 background fills button area
-                            radius: 10
-                            color: Theme.btnColor
-                            border.color: "#0d47a1"
-                            border.width: 2
-                        }
+                    //     background: Rectangle {
+                    //         anchors.fill: parent        // 🔑 background fills button area
+                    //         radius: 10
+                    //         color: Theme.btnColor
+                    //         border.color: "#0d47a1"
+                    //         border.width: 2
+                    //     }
 
-                        contentItem: Text {
-                            anchors.centerIn: parent
-                            text: "Test Serial"
-                            color: Theme.text
-                            font.pixelSize: sergrid.width * 0.05
-                            font.bold: true
-                        }
-                        onClicked: {
-                            console.log("Serial Port: " + portName.currentText + ", Baud Rate: " + baudRate.currentText);
-                        }
-                    }
+                    //     contentItem: Text {
+                    //         anchors.centerIn: parent
+                    //         text: "Test Serial"
+                    //         color: Theme.text
+                    //         font.pixelSize: sergrid.width * 0.05
+                    //         font.bold: true
+                    //     }
+                    //     onClicked: {
+                    //         console.log("Serial Port: " + portName.currentText + ", Baud Rate: " + baudRate.currentText);
+                    //     }
+                    // }
                 }
             }
         }
